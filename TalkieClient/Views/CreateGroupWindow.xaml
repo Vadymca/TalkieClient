@@ -18,7 +18,11 @@
 
         <!-- Список пользователей для выбора -->
         <ListBox x:Name="UserSelectionList" Grid.Row="2" Margin="10" SelectionMode="Multiple">
-            <!-- Users will be added dynamically -->
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Username}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
 
         <!-- Кнопка для создания группы -->

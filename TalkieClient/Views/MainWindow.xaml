@@ -3,11 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Talkie" Height="600" Width="1000">
     <Window.Resources>
+        <!-- Шаблон для отображения сообщений -->
         <DataTemplate x:Key="MessageTemplate">
             <StackPanel Orientation="Vertical" Margin="5">
                 <TextBlock Text="{Binding Sender.Username}" FontWeight="Bold" />
                 <TextBlock Text="{Binding Content}" TextWrapping="Wrap" />
-                <TextBlock Text="{Binding Timestamp, StringFormat='HH:mm:ss'}" FontStyle="Italic" HorizontalAlignment="Right" />
+                <TextBlock Text="{Binding Timestamp, StringFormat='dd-MM-yyyy HH:mm:ss'}" FontStyle="Italic" HorizontalAlignment="Right" />
+            </StackPanel>
+        </DataTemplate>
+
+        <!-- Шаблон для отображения пользователя с иконкой статуса -->
+        <DataTemplate x:Key="UserTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Ellipse Width="10" Height="10" Margin="0,0,5,0">
+                    <Ellipse.Style>
+                        <Style TargetType="Ellipse">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Status}" Value="Online">
+                                    <Setter Property="Fill" Value="Green"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Status}" Value="Offline">
+                                    <Setter Property="Fill" Value="Gray"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Ellipse.Style>
+                </Ellipse>
+                <TextBlock Text="{Binding Username}" VerticalAlignment="Center" />
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
@@ -32,9 +54,16 @@
         <!-- Список всех пользователей и групп -->
         <StackPanel Grid.Column="0" Grid.Row="1">
             <TextBlock Text="Users:" FontWeight="Bold" Margin="5"/>
-            <ListBox x:Name="UserList" Grid.Column="0" Grid.Row="1" SelectionChanged="UserList_SelectionChanged" DisplayMemberPath="Username"/>
+            <ListBox x:Name="UserList" 
+                     ItemTemplate="{StaticResource UserTemplate}" 
+                     SelectionChanged="UserList_SelectionChanged" 
+                     ItemsSource="{Binding Users}"/>
+
             <TextBlock Text="Groups:" FontWeight="Bold" Margin="10,20,10,5"/>
-            <ListBox x:Name="GroupList" SelectionChanged="GroupList_SelectionChanged" Margin="5"/>
+            <ListBox x:Name="GroupList" 
+                     SelectionChanged="GroupList_SelectionChanged" 
+                     DisplayMemberPath="ChatName" 
+                     ItemsSource="{Binding Groups}"/>
         </StackPanel>
 
         <!-- Данные о контакте/группе -->

@@ -14,52 +14,113 @@ namespace TalkieClient.SignalR
                 .WithUrl($"http://localhost:5133/chathub?username={username}")
                 .Build();
 
+            // Подписка на получение обычных сообщений
             _connection.On<string, string>("ReceiveMessage", (user, message) =>
             {
                 OnMessageReceived?.Invoke(user, message);
             });
 
+            // Подписка на получение приватных сообщений
             _connection.On<string, string>("ReceivePrivateMessage", (fromUser, message) =>
             {
                 OnPrivateMessageReceived?.Invoke(fromUser, message);
             });
 
+            // Подписка на получение уведомлений
             _connection.On<string>("ReceiveNotification", (notification) =>
             {
                 OnNotificationReceived?.Invoke(notification);
+            });
+
+            // Подписка на изменение статуса пользователя на онлайн
+            _connection.On<string>("UserOnline", (user) =>
+            {
+                OnUserOnline?.Invoke(user);
+            });
+
+            // Подписка на изменение статуса пользователя на оффлайн
+            _connection.On<string>("UserOffline", (user) =>
+            {
+                OnUserOffline?.Invoke(user);
             });
         }
 
         public async Task StartAsync()
         {
-            await _connection.StartAsync();
+            try
+            {
+                await _connection.StartAsync();
+                Console.WriteLine("Подключение к SignalR установлено успешно.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка при старте SignalR: {ex.Message}");
+            }
         }
 
+        // Метод для закрытия соединения при необходимости
+        public async Task StopAsync()
+        {
+            try
+            {
+                await _connection.StopAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка при остановке SignalR: {ex.Message}");
+            }
+        }
+
+        // Отправка обычного сообщения
         public async Task SendMessageAsync(string user, string message)
         {
+            if (string.IsNullOrWhiteSpace(message))
+                throw new ArgumentNullException(nameof(message), "Сообщение не может быть пустым.");
+
             await _connection.InvokeAsync("SendMessage", user, message);
         }
 
+        // Отправка приватного сообщения
         public async Task SendPrivateMessageAsync(string fromUser, string toUser, string message)
         {
+            if (string.IsNullOrWhiteSpace(message))
+                throw new ArgumentNullException(nameof(message), "Сообщение не может быть пустым.");
+
             await _connection.InvokeAsync("SendPrivateMessage", fromUser, toUser, message);
         }
 
+        // Подключение к группе
         public async Task JoinGroupAsync(string groupName)
         {
+            if (string.IsNullOrWhiteSpace(groupName))
+                throw new ArgumentNullException(nameof(groupName), "Название группы не может быть пустым.");
+
             await _connection.InvokeAsync("JoinGroup", groupName);
         }
 
+        // Отключение от группы
         public async Task LeaveGroupAsync(string groupName)
         {
+            if (string.IsNullOrWhiteSpace(groupName))
+                throw new ArgumentNullException(nameof(groupName), "Название группы не может быть пустым.");
+
             await _connection.InvokeAsync("LeaveGroup", groupName);
         }
 
+        // Отправка сообщения в группу
         public async Task SendGroupMessageAsync(string groupName, string user, string message)
         {
+            if (string.IsNullOrWhiteSpace(message))
+                throw new ArgumentNullException(nameof(message), "Сообщение не может быть пустым.");
+
             await _connection.InvokeAsync("SendGroupMessage", groupName, user, message);
         }
 
+        // События для уведомлений об изменении статуса пользователя
+        public event Action<string> OnUserOnline;
+        public event Action<string> OnUserOffline;
+
+        // События для обработки получения сообщений
         public event Action<string, string> OnMessageReceived;
         public event Action<string, string> OnPrivateMessageReceived;
         public event Action<string> OnNotificationReceived;

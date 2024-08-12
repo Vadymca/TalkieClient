@@ -19,6 +19,8 @@ public class User
     public string Status { get; set; }
     public string Role { get; set; }
 
+    public bool IsOnline { get; set; }  
+
     public virtual ICollection<UserChat> UserChats { get; set; }
     public virtual ICollection<Message> Messages { get; set; }
     public virtual ICollection<Notification> Notifications { get; set; }
