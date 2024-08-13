@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using TalkieClient.Data;
@@ -14,11 +15,11 @@ namespace TalkieClient.Views
         private SignalRClient _signalRClient;
         private ObservableCollection<Message> _messages;
         private ObservableCollection<User> _users;
-
         public MainWindow()
         {
             InitializeComponent();
-            this.Close(); // Закрываем окно, если используется пустой конструктор
+            this.Close();
+            
         }
 
         public MainWindow(User loggedInUser)
@@ -30,6 +31,7 @@ namespace TalkieClient.Views
             _loggedInUser = loggedInUser;
             App.CurrentUserId = _loggedInUser.UserId;
             CurrentUserTextBlock.Text = _loggedInUser.Username;
+            LoadUsersAndGroupsAsync();
 
             _signalRClient = new SignalRClient(_loggedInUser.Username);
 
@@ -40,34 +42,17 @@ namespace TalkieClient.Views
             _signalRClient.OnUserOffline += SignalRClient_OnUserOffline;
 
             _messages = new ObservableCollection<Message>();
-            _users = new ObservableCollection<User>();
             MessageList.ItemsSource = _messages;
+
+            _users = App.Users;
             UserList.ItemsSource = _users;
 
-            LoadUsersAndGroupsAsync();
             StartSignalRClient();
         }
 
         private async void StartSignalRClient()
         {
             await _signalRClient.StartAsync();
-        }
-
-        private async void LoadUsersAndGroupsAsync()
-        {
-            using (var context = new AppDbContext())
-            {
-                var users = await context.Users.ToListAsync() ?? new List<User>();
-                _users.Clear();
-                foreach (var user in users)
-                {
-                    user.Status = "Offline";
-                    _users.Add(user);
-                }
-
-                var groups = await context.Chats.Where(c => c.IsGroup).ToListAsync() ?? new List<Chat>();
-                GroupList.ItemsSource = groups;
-            }
         }
 
         private void SignalRClient_OnMessageReceived(string user, string message)
@@ -104,7 +89,8 @@ namespace TalkieClient.Views
                 if (user != null)
                 {
                     user.Status = "Online";
-                    // Обновление UI для отображения статуса онлайн
+                    user.IsOnline = true;
+                    SortUsersByStatus();  // Сортировка после обновления статуса
                 }
             });
         }
@@ -117,9 +103,49 @@ namespace TalkieClient.Views
                 if (user != null)
                 {
                     user.Status = "Offline";
-                    // Обновление UI для отображения статуса оффлайн
+                    user.IsOnline = false;
+                    SortUsersByStatus();  // Сортировка после обновления статуса
                 }
             });
+        }
+
+        private void SortUsersByStatus()
+        {
+            var sortedUsers = _users.OrderByDescending(u => u.IsOnline).ThenBy(u => u.Username).ToList();
+
+            // Очищаем и заполняем ObservableCollection, чтобы обновить UI
+            _users.Clear();
+            foreach (var user in sortedUsers)
+            {
+                _users.Add(user);
+            }
+        }
+
+        private async void LoadUsersAndGroupsAsync()
+        {
+            using (var context = new AppDbContext())
+            {
+                var users = await context.Users.ToListAsync() ?? new List<User>();
+
+                _users.Clear();
+
+                foreach (var user in users)
+                {
+                    user.Status = "Offline";
+                    user.IsOnline = false;
+                }
+
+                var sortedUsers = users.OrderByDescending(u => u.IsOnline).ToList();
+
+                foreach (var user in sortedUsers)
+                {
+                    _users.Add(user);
+                }
+                SortUsersByStatus();
+
+                var groups = await context.Chats.Where(c => c.IsGroup).ToListAsync() ?? new List<Chat>();
+                GroupList.ItemsSource = groups;
+            }
         }
 
         private void UserList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -260,6 +286,18 @@ namespace TalkieClient.Views
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(MessageTextBox.Text))
+            {
+                MessageBox.Show("Message cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (UserList.SelectedItem == null && GroupList.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a user or group to send a message.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             if (UserList.SelectedItem is User selectedUser)
             {
                 using (var context = new AppDbContext())
@@ -289,6 +327,10 @@ namespace TalkieClient.Views
 
                         MessageTextBox.Clear();
                     }
+                    else
+                    {
+                        MessageBox.Show("Unable to find or create a chat with the selected user.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
             else if (GroupList.SelectedItem is Chat selectedGroup)
@@ -313,7 +355,12 @@ namespace TalkieClient.Views
                     MessageTextBox.Clear();
                 }
             }
+            else
+            {
+                MessageBox.Show("Please select a valid user or group.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
+
 
         private void ShowNotification(string title, string message)
         {
