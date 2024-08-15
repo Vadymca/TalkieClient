@@ -36,30 +36,37 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="220"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
+        <!-- Поле поиска пользователей и групп -->
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical" Margin="10">
+            <TextBlock Text="Search..." FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBox x:Name="SearchTextBox" Width="200" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" TextChanged="SearchTextBox_TextChanged"/>
+        </StackPanel>
+
         <!-- Текущий пользователь -->
-        <TextBlock x:Name="CurrentUserTextBlock" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+        <TextBlock x:Name="CurrentUserTextBlock" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" Margin="0,40,0,0" />
 
         <!-- Кнопка создания группы -->
         <Button Content="Create Group" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" Click="CreateGroupButton_Click" />
 
         <!-- Список всех пользователей и групп -->
-        <StackPanel Grid.Column="0" Grid.Row="1">
-            <TextBlock Text="Users:" FontWeight="Bold" Margin="5"/>
+        <StackPanel Grid.Column="0" Grid.Row="1" Margin="10">
+            <TextBlock Text="Users:" FontWeight="Bold" Margin="0,0,0,5"/>
             <ListBox x:Name="UserList" 
                      ItemTemplate="{StaticResource UserTemplate}" 
                      SelectionChanged="UserList_SelectionChanged" 
-                     ItemsSource="{Binding Users}"/>
+                     ItemsSource="{Binding Users}"
+                     Margin="0,0,0,10"/>
 
-            <TextBlock Text="Groups:" FontWeight="Bold" Margin="10,20,10,5"/>
+            <TextBlock Text="Groups:" FontWeight="Bold" Margin="0,20,0,5"/>
             <ListBox x:Name="GroupList" 
                      SelectionChanged="GroupList_SelectionChanged" 
                      DisplayMemberPath="ChatName" 
@@ -73,12 +80,12 @@
         </StackPanel>
 
         <!-- Окно сообщений -->
-        <ListBox x:Name="MessageList" Grid.Column="1" Grid.Row="1" ItemTemplate="{StaticResource MessageTemplate}" />
+        <ListBox x:Name="MessageList" Grid.Column="1" Grid.Row="1" ItemTemplate="{StaticResource MessageTemplate}" Margin="10"/>
 
         <!-- Окно ввода сообщения и кнопки -->
-        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
-            <TextBox x:Name="MessageTextBox" Width="600" Margin="5" />
-            <Button Content="Send" Click="SendButton_Click" Margin="5" />
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10">
+            <TextBox x:Name="MessageTextBox" Width="600" Margin="5"/>
+            <Button Content="Send" Click="SendButton_Click" Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>

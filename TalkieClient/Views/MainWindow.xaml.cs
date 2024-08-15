@@ -15,9 +15,11 @@ namespace TalkieClient.Views
         private SignalRClient _signalRClient;
         private ObservableCollection<Message> _messages;
         private ObservableCollection<User> _users;
+        private ObservableCollection<Chat> _groups;
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
             this.Close();
             
         }
@@ -28,9 +30,17 @@ namespace TalkieClient.Views
                 throw new ArgumentNullException(nameof(loggedInUser), "Logged-in user cannot be null.");
 
             InitializeComponent();
+            DataContext = this;
             _loggedInUser = loggedInUser;
             App.CurrentUserId = _loggedInUser.UserId;
             CurrentUserTextBlock.Text = _loggedInUser.Username;
+
+            _users = App.Users;
+            _groups = new ObservableCollection<Chat>();
+
+            UserList.ItemsSource = _users;
+            GroupList.ItemsSource = _groups;
+
             LoadUsersAndGroupsAsync();
 
             _signalRClient = new SignalRClient(_loggedInUser.Username);
@@ -44,11 +54,9 @@ namespace TalkieClient.Views
             _messages = new ObservableCollection<Message>();
             MessageList.ItemsSource = _messages;
 
-            _users = App.Users;
-            UserList.ItemsSource = _users;
-
             StartSignalRClient();
         }
+
 
         private async void StartSignalRClient()
         {
@@ -90,7 +98,7 @@ namespace TalkieClient.Views
                 {
                     user.Status = "Online";
                     user.IsOnline = true;
-                    SortUsersByStatus();  // Сортировка после обновления статуса
+                    SortUsersByStatus();  
                 }
             });
         }
@@ -104,7 +112,7 @@ namespace TalkieClient.Views
                 {
                     user.Status = "Offline";
                     user.IsOnline = false;
-                    SortUsersByStatus();  // Сортировка после обновления статуса
+                    SortUsersByStatus();  
                 }
             });
         }
@@ -113,7 +121,7 @@ namespace TalkieClient.Views
         {
             var sortedUsers = _users.OrderByDescending(u => u.IsOnline).ThenBy(u => u.Username).ToList();
 
-            // Очищаем и заполняем ObservableCollection, чтобы обновить UI
+            
             _users.Clear();
             foreach (var user in sortedUsers)
             {
@@ -144,9 +152,17 @@ namespace TalkieClient.Views
                 SortUsersByStatus();
 
                 var groups = await context.Chats.Where(c => c.IsGroup).ToListAsync() ?? new List<Chat>();
-                GroupList.ItemsSource = groups;
+
+                _groups.Clear();
+                foreach (var group in groups)
+                {
+                    _groups.Add(group);
+                }
+
+                GroupList.ItemsSource = _groups;
             }
         }
+
 
         private void UserList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -378,5 +394,28 @@ namespace TalkieClient.Views
                 LoadUsersAndGroupsAsync();
             }
         }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = SearchTextBox.Text.ToLower();
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                UserList.ItemsSource = _users;
+                GroupList.ItemsSource = _groups;
+            }
+            else
+            {
+                var filteredUsers = _users.Where(u => u.Username.ToLower().Contains(searchText)).ToList();
+                var filteredGroups = _groups.Where(g => g.ChatName.ToLower().Contains(searchText)).ToList();
+
+                UserList.ItemsSource = filteredUsers;
+                GroupList.ItemsSource = filteredGroups;
+            }
+        }
+
+
+
+
     }
 }
