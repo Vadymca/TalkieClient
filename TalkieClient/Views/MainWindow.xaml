@@ -1,18 +1,39 @@
 ﻿<Window x:Class="TalkieClient.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:TalkieClient"
         Title="Talkie" Height="600" Width="1000">
+
     <Window.Resources>
+        <!-- Конвертер для преобразования массива байт в изображение -->
+        <local:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
+
+        <!-- Селектор шаблонов для сообщений и файлов -->
+        <local:MessageOrFileTemplateSelector x:Key="MessageOrFileTemplateSelector" />
+
         <!-- Шаблон для отображения сообщений -->
         <DataTemplate x:Key="MessageTemplate">
-            <StackPanel Orientation="Vertical" Margin="5">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="{Binding Alignment}" Margin="5">
                 <TextBlock Text="{Binding Sender.Username}" FontWeight="Bold" />
                 <TextBlock Text="{Binding Content}" TextWrapping="Wrap" />
                 <TextBlock Text="{Binding Timestamp, StringFormat='dd-MM-yyyy HH:mm:ss'}" FontStyle="Italic" HorizontalAlignment="Right" />
             </StackPanel>
         </DataTemplate>
 
-        <!-- Шаблон для отображения пользователя с иконкой статуса -->
+        <!-- Шаблон для отображения файлов -->
+        <DataTemplate x:Key="FileTemplate">
+            <StackPanel Orientation="Vertical" Margin="5">
+                <TextBlock Text="{Binding Sender.Username}" FontWeight="Bold"  />
+                
+                <Image Source="{Binding Files[0].Data, Converter={StaticResource ByteArrayToImageConverter}}" 
+                   Width="100" Height="100" Margin="5"
+                   Visibility="{Binding Files[0].Data, Converter={StaticResource ByteArrayToImageConverter}, ConverterParameter=IsImageVisible}" />
+                <TextBlock Text="{Binding Files[0].FileName}" FontWeight="Bold" />
+                <TextBlock Text="{Binding Timestamp, StringFormat='dd-MM-yyyy HH:mm:ss'}" FontStyle="Italic" HorizontalAlignment="Right" />
+            </StackPanel>
+        </DataTemplate>
+
+        <!-- Шаблон для отображения пользователей с иконкой статуса -->
         <DataTemplate x:Key="UserTemplate">
             <StackPanel Orientation="Horizontal">
                 <Ellipse Width="10" Height="10" Margin="0,0,5,0">
@@ -80,12 +101,16 @@
         </StackPanel>
 
         <!-- Окно сообщений -->
-        <ListBox x:Name="MessageList" Grid.Column="1" Grid.Row="1" ItemTemplate="{StaticResource MessageTemplate}" Margin="10"/>
+        <ListBox x:Name="MessageList" Grid.Column="1" Grid.Row="1" 
+                 ItemTemplateSelector="{StaticResource MessageOrFileTemplateSelector}"
+                 Margin="10"
+                 MouseDoubleClick="MessageList_MouseDoubleClick"/>
 
         <!-- Окно ввода сообщения и кнопки -->
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10">
             <TextBox x:Name="MessageTextBox" Width="600" Margin="5"/>
             <Button Content="Send" Click="SendButton_Click" Margin="5"/>
+            <Button Content="Send File" Click="SendFileButton_Click" Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>

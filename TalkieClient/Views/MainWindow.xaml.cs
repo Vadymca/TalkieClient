@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using TalkieClient.Data;
 using TalkieClient.Models;
 using TalkieClient.SignalR;
@@ -21,7 +22,7 @@ namespace TalkieClient.Views
             InitializeComponent();
             DataContext = this;
             this.Close();
-            
+
         }
 
         public MainWindow(User loggedInUser)
@@ -55,9 +56,32 @@ namespace TalkieClient.Views
             MessageList.ItemsSource = _messages;
 
             StartSignalRClient();
+
+            try
+            {
+                // Инициализация селектора шаблонов
+                var templateSelector = new MessageOrFileTemplateSelector
+                {
+                    MessageTemplate = Resources["MessageTemplate"] as DataTemplate,
+                    FileTemplate = Resources["FileTemplate"] as DataTemplate
+                };
+
+                // Установка DataContext для ListBox, если шаблоны успешно найдены
+                if (templateSelector.MessageTemplate != null && templateSelector.FileTemplate != null)
+                {
+                    MessageList.ItemTemplateSelector = templateSelector;
+                }
+                else
+                {
+                    MessageBox.Show("One or both DataTemplates could not be found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+
         }
-
-
         private async void StartSignalRClient()
         {
             await _signalRClient.StartAsync();
@@ -98,7 +122,7 @@ namespace TalkieClient.Views
                 {
                     user.Status = "Online";
                     user.IsOnline = true;
-                    SortUsersByStatus();  
+                    SortUsersByStatus();
                 }
             });
         }
@@ -112,7 +136,7 @@ namespace TalkieClient.Views
                 {
                     user.Status = "Offline";
                     user.IsOnline = false;
-                    SortUsersByStatus();  
+                    SortUsersByStatus();
                 }
             });
         }
@@ -121,7 +145,7 @@ namespace TalkieClient.Views
         {
             var sortedUsers = _users.OrderByDescending(u => u.IsOnline).ThenBy(u => u.Username).ToList();
 
-            
+
             _users.Clear();
             foreach (var user in sortedUsers)
             {
@@ -162,7 +186,6 @@ namespace TalkieClient.Views
                 GroupList.ItemsSource = _groups;
             }
         }
-
 
         private void UserList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -242,10 +265,12 @@ namespace TalkieClient.Views
         {
             var messages = context.Messages
                 .Include(m => m.Sender)
+                .Include(m => m.Files)
                 .Where(m => m.ChatId == chat.ChatId)
                 .ToList();
 
             _messages.Clear();
+
             foreach (var message in messages)
             {
                 _messages.Add(message);
@@ -260,11 +285,18 @@ namespace TalkieClient.Views
             if (string.IsNullOrWhiteSpace(messageContent))
                 throw new ArgumentNullException(nameof(messageContent), "Message content cannot be null or empty.");
 
+            
+
             using (var context = new AppDbContext())
             {
 
                 if (chat.ChatId == 0)
                     throw new ArgumentException("ChatId cannot be 0 or default value.", nameof(chat.ChatId));
+
+                if (chat.UserChats == null || !chat.UserChats.Any())
+                {
+                    throw new InvalidOperationException("No users found for this chat.");
+                }
 
                 var message = new Message
                 {
@@ -299,6 +331,93 @@ namespace TalkieClient.Views
                 MessageTextBox.Clear();
             }
         }
+        private async Task SendFileToChatAsync(Chat chat, Models.File file)
+        {
+            if (chat == null)
+                throw new ArgumentNullException(nameof(chat), "Chat cannot be null.");
+
+            if (file == null)
+                throw new ArgumentNullException(nameof(file), "File cannot be null.");
+
+            if (_loggedInUser == null)
+                throw new InvalidOperationException("Logged-in user is not set.");
+
+            // Проверяем, что у файла есть путь
+            if (string.IsNullOrWhiteSpace(file.FilePath))
+                throw new ArgumentException("FilePath cannot be null or empty.", nameof(file.FilePath));
+
+            using (var context = new AppDbContext())
+            {
+                // Загружаем чат вместе с UserChats и связанными пользователями
+                chat = context.Chats
+                              .Include(c => c.UserChats)
+                              .ThenInclude(uc => uc.User)
+                              .FirstOrDefault(c => c.ChatId == chat.ChatId);
+
+                if (chat == null)
+                    throw new InvalidOperationException("Chat not found.");
+
+                if (chat.UserChats == null || !chat.UserChats.Any())
+                {
+                    throw new InvalidOperationException("No users found for this chat.");
+                }
+
+                var message = new Message
+                {
+                    SenderId = _loggedInUser.UserId,
+                    ChatId = chat.ChatId,
+                    Content = $"File: {file.FileName}",
+                    Files = new List<Models.File> { file },
+                    Timestamp = DateTime.Now,
+                    Type = MessageType.File
+                };
+
+                context.Messages.Add(message);
+                await context.SaveChangesAsync();
+
+                _messages.Add(message);
+
+                if (chat.IsGroup)
+                {
+                    await _signalRClient.SendGroupMessageAsync(chat.ChatName, _loggedInUser.Username, $"File: {file.FileName}");
+                }
+                else
+                {
+                    var userChat = chat.UserChats.FirstOrDefault(uc => uc.UserId != _loggedInUser.UserId);
+                    if (userChat == null)
+                        throw new InvalidOperationException("No other user found in this chat.");
+
+                    var recipient = userChat.User?.Username;
+                    if (string.IsNullOrWhiteSpace(recipient))
+                        throw new InvalidOperationException("Recipient username is null or empty.");
+
+                    await _signalRClient.SendPrivateMessageAsync(_loggedInUser.Username, recipient, $"File: {file.FileName}");
+                }
+            }
+        }
+
+        private void MessageList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (MessageList.SelectedItem is Message selectedMessage && selectedMessage.Files?.Count > 0)
+            {
+                var file = selectedMessage.Files.First();
+                if (!string.IsNullOrEmpty(file.FilePath) && System.IO.File.Exists(file.FilePath))
+                {
+                    try
+                    {
+                        Process.Start(new ProcessStartInfo(file.FilePath) { UseShellExecute = true });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Could not open the file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("File does not exist.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
@@ -331,6 +450,7 @@ namespace TalkieClient.Views
                             Content = MessageTextBox.Text,
                             Timestamp = DateTime.Now,
                             SenderId = _loggedInUser.UserId,
+                            Type = MessageType.Text,
                             ChatId = chat.ChatId
                         };
 
@@ -377,11 +497,55 @@ namespace TalkieClient.Views
             }
         }
 
+        private async void SendFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var fileName = openFileDialog.FileName;
+                var fileData = System.IO.File.ReadAllBytes(fileName);
 
+                var file = new File
+                {
+                    FileName = System.IO.Path.GetFileName(fileName),
+                    Data = fileData,
+                    FilePath = fileName 
+                };
+
+                if (UserList.SelectedItem is User selectedUser)
+                {
+                    using (var context = new AppDbContext())
+                    {
+                        var chat = GetOrCreateChatWithUser(context, selectedUser);
+                        if (chat != null)
+                        {
+                            await SendFileToChatAsync(chat, file);
+                        }
+                    }
+                }
+                else if (GroupList.SelectedItem is Chat selectedGroup)
+                {
+                    await SendFileToChatAsync(selectedGroup, file);
+                }
+            }
+        }
         private void ShowNotification(string title, string message)
         {
             var notificationWindow = new NotificationWindow(title, message);
             notificationWindow.Show();
+
+            var timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(2)
+            };
+
+            timer.Tick += (sender, args) =>
+            {
+                notificationWindow.Close();
+                timer.Stop();
+            };
+
+            timer.Start();
         }
 
         private void CreateGroupButton_Click(object sender, RoutedEventArgs e)

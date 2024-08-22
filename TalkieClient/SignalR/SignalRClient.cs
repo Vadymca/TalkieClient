@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using System;
+using System.Threading.Tasks;
 
 namespace TalkieClient.SignalR
 {
@@ -42,6 +44,12 @@ namespace TalkieClient.SignalR
             _connection.On<string>("UserOffline", (user) =>
             {
                 OnUserOffline?.Invoke(user);
+            });
+
+            // Подписка на получение файла
+            _connection.On<string, string, byte[]>("ReceiveFile", (user, fileName, fileData) =>
+            {
+                OnFileReceived?.Invoke(user, fileName, fileData);
             });
         }
 
@@ -116,6 +124,15 @@ namespace TalkieClient.SignalR
             await _connection.InvokeAsync("SendGroupMessage", groupName, user, message);
         }
 
+        // Отправка файла
+        public async Task SendFileAsync(string user, string fileName, byte[] fileData)
+        {
+            if (fileData == null || fileData.Length == 0)
+                throw new ArgumentNullException(nameof(fileData), "Файл не может быть пустым.");
+
+            await _connection.InvokeAsync("SendFile", user, fileName, fileData);
+        }
+
         // События для уведомлений об изменении статуса пользователя
         public event Action<string> OnUserOnline;
         public event Action<string> OnUserOffline;
@@ -124,5 +141,8 @@ namespace TalkieClient.SignalR
         public event Action<string, string> OnMessageReceived;
         public event Action<string, string> OnPrivateMessageReceived;
         public event Action<string> OnNotificationReceived;
+
+        // Событие для обработки получения файла
+        public event Action<string, string, byte[]> OnFileReceived;
     }
 }

@@ -13,8 +13,9 @@ namespace TalkieClient.Models
         [Required]
         public byte[] Data { get; set; }
 
+        public string FilePath { get; set; }
+
         public int? MessageID { get; set; }
         public virtual Message Message { get; set; }
     }
-
 }
