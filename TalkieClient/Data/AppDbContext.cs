@@ -24,9 +24,7 @@ namespace TalkieClient.Data
             modelBuilder.Entity<Message>().HasKey(m => m.MessageId);
             modelBuilder.Entity<File>().HasKey(f => f.FileID);
             modelBuilder.Entity<Notification>().HasKey(n => n.NotificationID);
-
-            modelBuilder.Entity<UserChat>()
-                .HasKey(uc => new { uc.UserId, uc.ChatId });
+            modelBuilder.Entity<UserChat>().HasKey(uc => new { uc.UserId, uc.ChatId });
 
             modelBuilder.Entity<UserChat>()
                 .HasOne(uc => uc.User)
@@ -48,10 +46,23 @@ namespace TalkieClient.Data
                 .WithMany(u => u.Messages)
                 .HasForeignKey(m => m.SenderId);
 
+            modelBuilder.Entity<Message>()
+                .HasMany(m => m.Files)
+                .WithOne(f => f.Message)
+                .HasForeignKey(f => f.MessageID)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.User)
                 .WithMany(u => u.Notifications)
                 .HasForeignKey(n => n.UserID);
+
+            modelBuilder.Entity<File>()
+                .HasOne(f => f.Message)
+                .WithMany(m => m.Files)
+                .HasForeignKey(f => f.MessageID)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TalkieClient.Data;
 
@@ -11,9 +12,11 @@ using TalkieClient.Data;
 namespace TalkieClient.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240810140823_AddIsOnlineToUser")]
+    partial class AddIsOnlineToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,10 +61,6 @@ namespace TalkieClient.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("MessageID")
                         .HasColumnType("int");
 
@@ -92,9 +91,6 @@ namespace TalkieClient.Migrations
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.HasKey("MessageId");
 
@@ -188,9 +184,8 @@ namespace TalkieClient.Migrations
             modelBuilder.Entity("TalkieClient.Models.File", b =>
                 {
                     b.HasOne("TalkieClient.Models.Message", "Message")
-                        .WithMany("Files")
-                        .HasForeignKey("MessageID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("MessageID");
 
                     b.Navigation("Message");
                 });
@@ -249,11 +244,6 @@ namespace TalkieClient.Migrations
                     b.Navigation("Messages");
 
                     b.Navigation("UserChats");
-                });
-
-            modelBuilder.Entity("TalkieClient.Models.Message", b =>
-                {
-                    b.Navigation("Files");
                 });
 
             modelBuilder.Entity("User", b =>

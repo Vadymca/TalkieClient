@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using TalkieClient.Views;
 
 namespace TalkieClient
@@ -6,6 +7,7 @@ namespace TalkieClient
     public partial class App : Application
     {
         public static int CurrentUserId { get; set; }
+        public static ObservableCollection<User> Users { get; } = new ObservableCollection<User>();
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

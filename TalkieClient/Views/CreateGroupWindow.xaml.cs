@@ -28,14 +28,8 @@ namespace TalkieClient.Views
 
         private void CreateGroupButton_Click(object sender, RoutedEventArgs e)
         {
-            if (GroupNameTextBox.Text == "Enter group name" || string.IsNullOrWhiteSpace(GroupNameTextBox.Text))
-            {
-                MessageBox.Show("Please enter a group name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
             var selectedUsers = UserSelectionList.SelectedItems.Cast<User>().ToList();
-            if (selectedUsers.Count > 0)
+            if (selectedUsers.Count > 0 && !string.IsNullOrWhiteSpace(GroupNameTextBox.Text))
             {
                 using (var context = new AppDbContext())
                 {
@@ -44,9 +38,9 @@ namespace TalkieClient.Views
                         ChatName = GroupNameTextBox.Text,
                         IsGroup = true,
                         UserChats = new List<UserChat>
-                {
-                    new UserChat { UserId = _loggedInUser.UserId }
-                }
+                        {
+                            new UserChat { UserId = _loggedInUser.UserId }
+                        }
                     };
 
                     foreach (var user in selectedUsers)
@@ -63,9 +57,8 @@ namespace TalkieClient.Views
             }
             else
             {
-                MessageBox.Show("Please select at least one user.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter a group name and select at least one user.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
     }
 }
