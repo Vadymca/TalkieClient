@@ -79,6 +79,11 @@ namespace TalkieClient.SignalR
             }
         }
 
+        public async Task NotifyUserStatus(string username, bool isOnline)
+        {
+            await _connection.InvokeAsync("UpdateUserStatus", username, isOnline);
+        }
+
         // Отправка обычного сообщения
         public async Task SendMessageAsync(string user, string message)
         {

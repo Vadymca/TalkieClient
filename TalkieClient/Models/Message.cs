@@ -30,12 +30,6 @@ namespace TalkieClient.Models
         public virtual User Sender { get; set; }
         public MessageType Type { get; set; } = MessageType.Text;
         public virtual ICollection<File> Files { get; set; } = new List<File>();
-        public HorizontalAlignment Alignment
-        {
-            get
-            {
-                return SenderId == App.CurrentUserId ? HorizontalAlignment.Right : HorizontalAlignment.Left;
-            }
-        }
+       
     }
 }

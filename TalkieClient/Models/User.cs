@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using TalkieClient.Models;
 
@@ -7,16 +8,53 @@ public class User : INotifyPropertyChanged
     [Key]
     public int UserId { get; set; }
 
+    private string _username;
     [Required]
-    public string Username { get; set; }
+    public string Username
+    {
+        get => _username;
+        set
+        {
+            if (_username != value)
+            {
+                _username = value;
+                OnPropertyChanged(nameof(Username));
+            }
+        }
+    }
 
+    private string _email;
     [Required]
-    public string Email { get; set; }
+    public string Email
+    {
+        get => _email;
+        set
+        {
+            if (_email != value)
+            {
+                _email = value;
+                OnPropertyChanged(nameof(Email));
+            }
+        }
+    }
 
     [Required]
     public string PasswordHash { get; set; }
 
-    public string Avatar { get; set; }
+    private byte[] _avatar;
+    public byte[] Avatar
+    {
+        get => _avatar;
+        set
+        {
+            if (_avatar != value)
+            {
+                _avatar = value;
+                OnPropertyChanged(nameof(Avatar));
+            }
+        }
+    }
+
     private string _status;
     public string Status
     {
@@ -30,9 +68,22 @@ public class User : INotifyPropertyChanged
             }
         }
     }
+
     public string Role { get; set; }
 
-    public bool IsOnline { get; set; }  
+    private bool _isOnline;
+    public bool IsOnline
+    {
+        get => _isOnline;
+        set
+        {
+            if (_isOnline != value)
+            {
+                _isOnline = value;
+                OnPropertyChanged(nameof(IsOnline));
+            }
+        }
+    }
 
     public virtual ICollection<UserChat> UserChats { get; set; }
     public virtual ICollection<Message> Messages { get; set; }

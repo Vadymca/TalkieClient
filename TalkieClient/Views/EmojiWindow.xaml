@@ -1,0 +1,155 @@
+﻿<Window x:Class="TalkieClient.Views.EmojiWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TalkieClient.Views"
+        mc:Ignorable="d"
+        Title="EmojiWindow" Height="450" Width="800">
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" >
+            <StackPanel >
+                <WrapPanel>
+                    <Button Content="😀" Width="50" Height="50" Background="LightYellow" Click="EmojiButton_Click" />
+                    <Button Content="😂" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
+                    <Button Content="😃" Width="50" Height="50" Background="LightPink" Click="EmojiButton_Click" />
+                    <Button Content="😄" Width="50" Height="50" Background="LightBlue" Click="EmojiButton_Click" />
+                    <Button Content="😁" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
+                    <Button Content="😆" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
+                    <Button Content="😅" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="🤣" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
+                    <Button Content="😊" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
+                    <Button Content="😇" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
+                    <Button Content="🥰" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
+                    <Button Content="😍" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
+                    <Button Content="🤩" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
+                    <Button Content="🥳" Width="50" Height="50" Background="OldLace" Click="EmojiButton_Click" />
+                    <Button Content="😎" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
+                    <Button Content="🤓" Width="50" Height="50" Background="LavenderBlush" Click="EmojiButton_Click" />
+                    <Button Content="🧐" Width="50" Height="50" Background="LightGray" Click="EmojiButton_Click" />
+                    <Button Content="😕" Width="50" Height="50" Background="LightYellow" Click="EmojiButton_Click" />
+                    <Button Content="😟" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
+                    <Button Content="😢" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
+                    <Button Content="😭" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
+                    <Button Content="😤" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
+                    <Button Content="😠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😡" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
+                    <Button Content="😳" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
+                    <Button Content="😵" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
+                    <Button Content="😵‍💫" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
+                    <Button Content="🤯" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
+                    <Button Content="🤠" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
+                    <Button Content="🥴" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😷" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
+                    <Button Content="🤒" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
+                    <Button Content="🤕" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
+                    <Button Content="🤑" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
+                    <Button Content="🤠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="🥳" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
+                    <Button Content="🤗" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
+                    <Button Content="🤔" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
+                    <Button Content="🤭" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
+                    <Button Content="🤫" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
+                    <Button Content="🤥" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
+                    <Button Content="🤧" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😇" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
+                    <Button Content="🥺" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
+                    <Button Content="🤨" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
+                    <Button Content="😤" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
+                    <Button Content="😠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😡" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
+                    <Button Content="😳" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
+                    <Button Content="😵" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
+                    <Button Content="😵‍💫" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
+                    <Button Content="🤯" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
+                    <Button Content="🤠" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
+                    <Button Content="🥴" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😷" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
+                    <Button Content="🤒" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
+                    <Button Content="🤕" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
+                    <Button Content="🤑" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
+                    <Button Content="🤠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="🥳" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
+                    <Button Content="🤗" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
+                    <Button Content="🤔" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
+                    <Button Content="🤭" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
+                    <Button Content="🤫" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
+                    <Button Content="🤥" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
+                    <Button Content="🤧" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😇" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
+                    <Button Content="🥺" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
+                    <Button Content="🤨" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
+                    <Button Content="😤" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
+                    <Button Content="😠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😡" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
+                    <Button Content="😳" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
+                    <Button Content="😵" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
+                    <Button Content="😵‍💫" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
+                    <Button Content="🤯" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
+                    <Button Content="🤠" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
+                    <Button Content="🥴" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😷" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
+                    <Button Content="🤒" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
+                    <Button Content="🤕" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
+                    <Button Content="🤑" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
+                    <Button Content="🤠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="🥳" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
+                    <Button Content="🤗" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
+                    <Button Content="🤔" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
+                    <Button Content="🤭" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
+                    <Button Content="🤫" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
+                    <Button Content="🤥" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
+                    <Button Content="🤧" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😇" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
+                    <Button Content="🥺" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
+                    <Button Content="🤨" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
+                    <Button Content="😤" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
+                    <Button Content="😠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😡" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
+                    <Button Content="😳" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
+                    <Button Content="😵" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
+                    <Button Content="😵‍💫" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
+                    <Button Content="🤯" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
+                    <Button Content="🤠" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
+                    <Button Content="🥴" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😷" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
+                    <Button Content="🤒" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
+                    <Button Content="🤕" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
+                    <Button Content="🤑" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
+                    <Button Content="🤠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="🥳" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
+                    <Button Content="🤗" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
+                    <Button Content="🤔" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
+                    <Button Content="🤭" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
+                    <Button Content="🤫" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
+                    <Button Content="🤥" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
+                    <Button Content="🤧" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😇" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
+                    <Button Content="🥺" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
+                    <Button Content="🤨" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
+                    <Button Content="😤" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
+                    <Button Content="😠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😡" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
+                    <Button Content="😳" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
+                    <Button Content="😵" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
+                    <Button Content="😵‍💫" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
+                    <Button Content="🤯" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
+                    <Button Content="🤠" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
+                    <Button Content="🥴" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="😷" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
+                    <Button Content="🤒" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
+                    <Button Content="🤕" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
+                    <Button Content="🤑" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
+                    <Button Content="🤠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                    <Button Content="🥳" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
+                    <Button Content="🤗" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
+                    <Button Content="🤔" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
+                    <Button Content="🤭" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
+                    <Button Content="🤫" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
+                    <Button Content="🤥" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
+                    <Button Content="🤧" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+                </WrapPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>
