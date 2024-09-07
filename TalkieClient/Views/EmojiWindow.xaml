@@ -5,149 +5,282 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TalkieClient.Views"
         mc:Ignorable="d"
-        Title="EmojiWindow" Height="450" Width="800">
+        Title="EmojiWindow" Height="450" Width="600" Background="WhiteSmoke" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="EmojiButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFFAF3E0"/>
+                                <Setter Property="BorderBrush" Value="#FFD4B182"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" >
-            <StackPanel >
-                <WrapPanel>
-                    <Button Content="😀" Width="50" Height="50" Background="LightYellow" Click="EmojiButton_Click" />
-                    <Button Content="😂" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
-                    <Button Content="😃" Width="50" Height="50" Background="LightPink" Click="EmojiButton_Click" />
-                    <Button Content="😄" Width="50" Height="50" Background="LightBlue" Click="EmojiButton_Click" />
-                    <Button Content="😁" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
-                    <Button Content="😆" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
-                    <Button Content="😅" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="🤣" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
-                    <Button Content="😊" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
-                    <Button Content="😇" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
-                    <Button Content="🥰" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
-                    <Button Content="😍" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
-                    <Button Content="🤩" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
-                    <Button Content="🥳" Width="50" Height="50" Background="OldLace" Click="EmojiButton_Click" />
-                    <Button Content="😎" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
-                    <Button Content="🤓" Width="50" Height="50" Background="LavenderBlush" Click="EmojiButton_Click" />
-                    <Button Content="🧐" Width="50" Height="50" Background="LightGray" Click="EmojiButton_Click" />
-                    <Button Content="😕" Width="50" Height="50" Background="LightYellow" Click="EmojiButton_Click" />
-                    <Button Content="😟" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
-                    <Button Content="😢" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
-                    <Button Content="😭" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
-                    <Button Content="😤" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
-                    <Button Content="😠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😡" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
-                    <Button Content="😳" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
-                    <Button Content="😵" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
-                    <Button Content="😵‍💫" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
-                    <Button Content="🤯" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
-                    <Button Content="🤠" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
-                    <Button Content="🥴" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😷" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
-                    <Button Content="🤒" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
-                    <Button Content="🤕" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
-                    <Button Content="🤑" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
-                    <Button Content="🤠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="🥳" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
-                    <Button Content="🤗" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
-                    <Button Content="🤔" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
-                    <Button Content="🤭" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
-                    <Button Content="🤫" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
-                    <Button Content="🤥" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
-                    <Button Content="🤧" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😇" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
-                    <Button Content="🥺" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
-                    <Button Content="🤨" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
-                    <Button Content="😤" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
-                    <Button Content="😠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😡" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
-                    <Button Content="😳" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
-                    <Button Content="😵" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
-                    <Button Content="😵‍💫" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
-                    <Button Content="🤯" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
-                    <Button Content="🤠" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
-                    <Button Content="🥴" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😷" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
-                    <Button Content="🤒" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
-                    <Button Content="🤕" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
-                    <Button Content="🤑" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
-                    <Button Content="🤠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="🥳" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
-                    <Button Content="🤗" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
-                    <Button Content="🤔" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
-                    <Button Content="🤭" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
-                    <Button Content="🤫" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
-                    <Button Content="🤥" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
-                    <Button Content="🤧" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😇" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
-                    <Button Content="🥺" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
-                    <Button Content="🤨" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
-                    <Button Content="😤" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
-                    <Button Content="😠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😡" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
-                    <Button Content="😳" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
-                    <Button Content="😵" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
-                    <Button Content="😵‍💫" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
-                    <Button Content="🤯" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
-                    <Button Content="🤠" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
-                    <Button Content="🥴" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😷" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
-                    <Button Content="🤒" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
-                    <Button Content="🤕" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
-                    <Button Content="🤑" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
-                    <Button Content="🤠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="🥳" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
-                    <Button Content="🤗" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
-                    <Button Content="🤔" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
-                    <Button Content="🤭" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
-                    <Button Content="🤫" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
-                    <Button Content="🤥" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
-                    <Button Content="🤧" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😇" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
-                    <Button Content="🥺" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
-                    <Button Content="🤨" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
-                    <Button Content="😤" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
-                    <Button Content="😠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😡" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
-                    <Button Content="😳" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
-                    <Button Content="😵" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
-                    <Button Content="😵‍💫" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
-                    <Button Content="🤯" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
-                    <Button Content="🤠" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
-                    <Button Content="🥴" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😷" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
-                    <Button Content="🤒" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
-                    <Button Content="🤕" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
-                    <Button Content="🤑" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
-                    <Button Content="🤠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="🥳" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
-                    <Button Content="🤗" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
-                    <Button Content="🤔" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
-                    <Button Content="🤭" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
-                    <Button Content="🤫" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
-                    <Button Content="🤥" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
-                    <Button Content="🤧" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😇" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
-                    <Button Content="🥺" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
-                    <Button Content="🤨" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
-                    <Button Content="😤" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
-                    <Button Content="😠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😡" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
-                    <Button Content="😳" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
-                    <Button Content="😵" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
-                    <Button Content="😵‍💫" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
-                    <Button Content="🤯" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
-                    <Button Content="🤠" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
-                    <Button Content="🥴" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="😷" Width="50" Height="50" Background="LightGreen" Click="EmojiButton_Click" />
-                    <Button Content="🤒" Width="50" Height="50" Background="LightCyan" Click="EmojiButton_Click" />
-                    <Button Content="🤕" Width="50" Height="50" Background="LightCoral" Click="EmojiButton_Click" />
-                    <Button Content="🤑" Width="50" Height="50" Background="LightSalmon" Click="EmojiButton_Click" />
-                    <Button Content="🤠" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
-                    <Button Content="🥳" Width="50" Height="50" Background="Lavender" Click="EmojiButton_Click" />
-                    <Button Content="🤗" Width="50" Height="50" Background="LightSteelBlue" Click="EmojiButton_Click" />
-                    <Button Content="🤔" Width="50" Height="50" Background="MistyRose" Click="EmojiButton_Click" />
-                    <Button Content="🤭" Width="50" Height="50" Background="Honeydew" Click="EmojiButton_Click" />
-                    <Button Content="🤫" Width="50" Height="50" Background="PapayaWhip" Click="EmojiButton_Click" />
-                    <Button Content="🤥" Width="50" Height="50" Background="PeachPuff" Click="EmojiButton_Click" />
-                    <Button Content="🤧" Width="50" Height="50" Background="LightGoldenrodYellow" Click="EmojiButton_Click" />
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="10">
+                <!-- Заголовок для группы смайлов -->
+                <TextBlock Text="Smiling Faces" 
+                           FontSize="24" 
+                           FontWeight="Bold" 
+                           Foreground="#FF333333" 
+                           Margin="0,0,0,20"/>
+
+                <!-- Панель с кнопками смайликов -->
+                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20">
+                    <!-- Стилизация кнопок смайликов -->
+                    <Button Content="😀" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😉" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😁" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😆" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😅" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😂" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😊" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🙂" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😄" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🙃" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😇" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😃" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🤣" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🫠" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                </WrapPanel>
+                <!-- Заголовок для группы смайлов -->
+                <TextBlock Text="Faces in love" 
+                            FontSize="24" 
+                            FontWeight="Bold" 
+                            Foreground="#FF333333" 
+                            Margin="0,0,0,20"/>
+
+                <!-- Панель с кнопками смайликов -->
+                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20">
+                    <!-- Стилизация кнопок смайликов -->
+                    <Button Content="😚" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😙" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😍" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😗" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😘" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🥰" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🥲" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🤩" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="☺" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                </WrapPanel>
+                
+                <!-- Заголовок для группы смайлов -->
+                <TextBlock Text="Faces with tongue" 
+                           FontSize="24" 
+                           FontWeight="Bold" 
+                           Foreground="#FF333333" 
+                           Margin="0,0,0,20"/>
+
+                <!-- Панель с кнопками смайликов -->
+                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20">
+                    <!-- Стилизация кнопок смайликов -->
+                    <Button Content="😋" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😛" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😜" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😝" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🤪" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🤑" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                </WrapPanel>
+
+                <!-- Заголовок для группы смайлов -->
+                <TextBlock Text="Persons with hand" 
+                           FontSize="24" 
+                           FontWeight="Bold" 
+                           Foreground="#FF333333" 
+                           Margin="0,0,0,20"/>
+
+                <!-- Панель с кнопками смайликов -->
+                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20">
+                    <!-- Стилизация кнопок смайликов -->
+                    <Button Content="🤔" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🤭" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🤗" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🤫" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🫡" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🫢" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🫣" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                </WrapPanel>
+
+                <!-- Заголовок для группы смайлов -->
+                <TextBlock Text="Neutral or skeptical individuals" 
+                           FontSize="24" 
+                           FontWeight="Bold" 
+                           Foreground="#FF333333" 
+                           Margin="0,0,0,20"/>
+
+                <!-- Панель с кнопками смайликов -->
+                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,20">
+                    <!-- Стилизация кнопок смайликов -->
+                    <Button Content="😐" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😶" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😬" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😏" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😑" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="😒" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🙄" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🤨" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🤐" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🤥" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🫨" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
+                    <Button Content="🫥" Width="50" Height="50" Background="#FFFFFF" 
+                            FontFamily="Segoe UI Emoji" FontSize="24" Foreground="#FFF8B403"
+                            BorderBrush="#FFDDDDDD" BorderThickness="1" Margin="5" 
+                            Style="{StaticResource EmojiButtonStyle}" Click="EmojiButton_Click"/>
                 </WrapPanel>
             </StackPanel>
         </ScrollViewer>

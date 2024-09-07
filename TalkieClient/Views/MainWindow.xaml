@@ -205,6 +205,7 @@
             <StackPanel>
                 <TextBlock Text="Users:" FontWeight="Bold" FontSize="14" Margin="0,0,0,5"/>
                 <ListBox x:Name="UserList" 
+                         Background="WhiteSmoke"
                          ItemTemplate="{StaticResource UserTemplate}" 
                          SelectionChanged="UserList_SelectionChanged" 
                          ItemsSource="{Binding Users}"
@@ -213,6 +214,7 @@
 
                 <TextBlock Text="Groups:" FontWeight="Bold" FontSize="14" Margin="0,20,0,5"/>
                 <ListBox x:Name="GroupList"
+                         Background="WhiteSmoke"
                          ItemTemplate="{StaticResource GroupTemplate}"
                          SelectionChanged="GroupList_SelectionChanged"
                          ItemsSource="{Binding Groups}"
@@ -265,8 +267,12 @@
                     <Image Source="/Views/upload_10027665.png"/>
                 </StackPanel>
             </Button>
-            <TextBox x:Name="MessageTextBox" Width="450" Height="25" Margin="5"/>
-            <Button Content="😀" Width="30" Height="25" Margin="5" Background="WhiteSmoke" Foreground="#FFFFD500" BorderBrush="#3A78D2" BorderThickness="1" Click="EmojiPickerButton_Click" FontSize="16"/>
+            <TextBox x:Name="MessageTextBox" Width="450" Height="25" Margin="5" FontFamily="Segoe UI Emoji" FontSize="16" Foreground="Black"/>
+            <Button Width="30" Height="25" Background="WhiteSmoke" BorderBrush="#3A78D2" BorderThickness="1" Click="EmojiPickerButton_Click" Margin="5">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2">
+                    <Image Source="/Views/smile.png"/>
+                </StackPanel>
+            </Button>
             <Button Width="30" Height="25" Background="WhiteSmoke"  BorderBrush="#3A78D2" BorderThickness="1" Click="SendButton_Click" Margin="5">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2">
                     <Image Source="/Views/send-message.png"/>

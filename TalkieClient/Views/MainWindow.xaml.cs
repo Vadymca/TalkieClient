@@ -435,12 +435,14 @@ namespace TalkieClient.Views
                         Content = messageContent,
                         Timestamp = DateTime.Now,
                         SenderId = _loggedInUser.UserId,
-                        ChatId = chat.ChatId
+                        ChatId = chat.ChatId,
+                        Type = MessageType.Text
                     };
 
                     // Сохранение сообщения в базе данных
                     context.Messages.Add(message);
                     await context.SaveChangesAsync();
+                    _messages.Add(message);
 
                     // Отправка сообщения через SignalR
                     if (chat.IsGroup)
@@ -455,9 +457,6 @@ namespace TalkieClient.Views
                             await _signalRClient.SendPrivateMessageAsync(_loggedInUser.Username, recipient, message.Content);
                         }
                     }
-
-                    // После успешной отправки через SignalR добавляем сообщение в список
-                    _messages.Add(message);
 
                     // Обновляем UI
                     MessageList.ItemsSource = null;  // Сбрасываем источник данных
