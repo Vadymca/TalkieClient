@@ -19,17 +19,15 @@ namespace TalkieClient.Views
             _selectedUser = selectedUser;
             _currentUser = currentUser;
             var converter = new ByteArrayToImageConverter();
-            DataContext = _selectedUser;  // Прямо привязываем пользователя к контексту данных
+            DataContext = _selectedUser;
 
-            // Отображение данных
             UsernameTextBox.Text = _selectedUser.Username;
             EmailTextBox.Text = _selectedUser.Email;
 
-            // Если выбранный пользователь - это текущий пользователь
             if (_selectedUser.UserId == _currentUser.UserId)
             {
                 IsReadOnly = false;
-                _selectedUser.Status = "Online";  // Устанавливаем статус в "Онлайн"
+                _selectedUser.Status = "Online";
                 PasswordLabel.Visibility = Visibility.Visible;
                 PasswordBox.Visibility = Visibility.Visible;
                 UpdateButton.Visibility = Visibility.Visible;
@@ -40,7 +38,7 @@ namespace TalkieClient.Views
                 IsReadOnly = true;
             }
 
-            // Загрузка аватара
+            // Uploading an avatar
             if (_selectedUser?.Avatar != null && _selectedUser.Avatar.Length > 0)
             {
                 AvatarImage.Source = (BitmapImage)converter.Convert(_selectedUser.Avatar, typeof(BitmapImage), null, CultureInfo.InvariantCulture);
@@ -60,10 +58,8 @@ namespace TalkieClient.Views
             if (openFileDialog.ShowDialog() == true)
             {
                 byte[] imageData = File.ReadAllBytes(openFileDialog.FileName);
-                _selectedUser.Avatar = imageData;  // Изменение аватарки для выбранного пользователя
+                _selectedUser.Avatar = imageData; 
                 AvatarImage.Source = ConvertByteArrayToImage(imageData);
-
-                // Сохранение изменений в базе данных
                 SaveChangesToDatabase();
             }
         }
@@ -100,14 +96,8 @@ namespace TalkieClient.Views
             {
                 _selectedUser.PasswordHash = BCrypt.Net.BCrypt.HashPassword(PasswordBox.Password);
             }
-
-            // Сохранение изменений в базе данных
             SaveChangesToDatabase();
-
-            // Обновляем данные в главном окне
             UpdateMainWindow();
-
-            // Закрытие окна после обновления
             this.Close();
         }
 
@@ -115,18 +105,17 @@ namespace TalkieClient.Views
         {
             if (Application.Current.MainWindow is MainWindow mainWindow)
             {
-                // Если обновляется текущий пользователь, сохраняем его статус онлайн
                 if (_selectedUser.UserId == _currentUser.UserId)
                 {
                     _currentUser.Status = "Online";
                     _currentUser.IsOnline = true;
-                    SaveChangesToDatabase();  // Сохранение статуса в базе данных
+                    SaveChangesToDatabase();  
                 }
 
-                // Обновление списка пользователей и групп
+                // Updating the list of users and groups
                 mainWindow.RefreshUsersAndGroups(_selectedUser.UserId, null);
 
-                // Обновляем отображение в главном окне
+                // Update the display in the main window
                 mainWindow.UserList.Items.Refresh();
                 mainWindow.GroupList.Items.Refresh();
             }

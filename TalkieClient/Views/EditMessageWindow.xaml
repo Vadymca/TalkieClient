@@ -6,7 +6,7 @@
     WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        <!-- Стиль для закругленных кнопок -->
+        <!-- Style for rounded buttons -->
         <Style x:Key="RoundedButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#4A90E2"/>
             <Setter Property="Foreground" Value="White"/>
@@ -39,11 +39,11 @@
     </Window.Resources>
 
     <Grid Margin="10">
-        <!-- Поле для редактирования сообщения -->
+        <!-- Field for editing a message -->
         <TextBox x:Name="MessageContentTextBox" VerticalAlignment="Top" 
                  Padding="5" BorderBrush="#4A90E2" BorderThickness="1" />
 
-        <!-- Кнопка сохранения с закругленными краями -->
+        <!-- Save button with rounded edges -->
         <Button Content="Save" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                 Width="75" Margin="0,10,0,0"
                 Style="{StaticResource RoundedButtonStyle}" 

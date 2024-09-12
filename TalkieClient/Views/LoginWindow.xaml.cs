@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using TalkieClient.Data;
-using TalkieClient.Models;
 
 namespace TalkieClient.Views
 {
@@ -28,7 +25,6 @@ namespace TalkieClient.Views
                     if (user != null && BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
                     {
                         MessageBox.Show("Login successful!");
-                        // Перехід до головного вікна
                         var mainWindow = new MainWindow(user);
                         mainWindow.Show();
                         this.Close();

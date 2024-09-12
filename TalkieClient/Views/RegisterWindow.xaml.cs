@@ -4,7 +4,6 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using TalkieClient.Data;
-using TalkieClient.Models;
 
 namespace TalkieClient.Views
 {

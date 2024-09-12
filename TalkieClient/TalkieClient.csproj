@@ -27,10 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Views\bye_9476044.png" />
     <Resource Include="Views\send-message.png" />
     <Resource Include="Views\smile.png" />
