@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen" Background="#f0f4f8">
 
     <Window.Resources>
-        <!-- Стиль для кнопок с использованием ControlTemplate -->
+        <!-- Styling for buttons using ControlTemplate -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="#4A90E2"/>
             <Setter Property="Foreground" Value="White"/>
@@ -35,7 +35,7 @@
             </Setter>
         </Style>
 
-        <!-- Стиль для TextBox и PasswordBox с использованием ControlTemplate для скругленных углов -->
+        <!-- Style TextBox and PasswordBox using ControlTemplate for rounded corners -->
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="8"/>

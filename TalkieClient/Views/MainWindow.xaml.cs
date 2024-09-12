@@ -62,14 +62,14 @@ namespace TalkieClient.Views
 
             try
             {
-                // Инициализация селектора шаблонов
+                // Initializing the template selector
                 var templateSelector = new MessageOrFileTemplateSelector
                 {
                     MessageTemplate = Resources["MessageTemplate"] as DataTemplate,
                     FileTemplate = Resources["FileTemplate"] as DataTemplate
                 };
 
-                // Установка DataContext для ListBox, если шаблоны успешно найдены
+                // Set DataContext for ListBox if templates are found successfully
                 if (templateSelector.MessageTemplate != null && templateSelector.FileTemplate != null)
                 {
                     MessageList.ItemTemplateSelector = templateSelector;
@@ -133,7 +133,7 @@ namespace TalkieClient.Views
                     user.IsOnline = true;
                     SortUsersByStatus();
 
-                    // Обновляем источник данных для списка пользователей
+                    // Update the data source for the user list
                     UserList.ItemsSource = null;
                     UserList.ItemsSource = _users;
                 }
@@ -156,7 +156,7 @@ namespace TalkieClient.Views
                     user.IsOnline = false;
                     SortUsersByStatus();
 
-                    // Обновляем источник данных для списка пользователей
+                    
                     UserList.ItemsSource = null;
                     UserList.ItemsSource = _users;
                 }
@@ -175,15 +175,15 @@ namespace TalkieClient.Views
             using (var context = new AppDbContext())
             {
 
-                // Загрузка всех пользователей из базы данных
+                // Loading all users from the database
                 var users = await context.Users.ToListAsync() ?? new List<User>();
                 
-                //Очистка текущего списка пользователей
+
                 _users.Clear();
 
                 foreach (var user in users)
                 {
-                    // Проверяем, если пользователь в сети через ваше подключение SignalR или другое сетевое взаимодействие
+                    // Check if the user is on the network through your SignalR connection or other network communication
                     if (IsUserOnline(user.Username))
                     {
                         user.Status = "Online";
@@ -197,18 +197,14 @@ namespace TalkieClient.Views
 
                     _users.Add(user);
                 }
-
-                // Сортировка пользователей по статусу
                 SortUsersByStatus();
 
-                // Обновление источника данных для списка пользователей
                 UserList.ItemsSource = null;
                 UserList.ItemsSource = _users;
 
-                // Загрузка всех групп из базы данных
+                // Loading all groups from the database
                 var groups = await context.Chats.Where(c => c.IsGroup).ToListAsync() ?? new List<Chat>();
 
-                // Очистка текущего списка групп
                 _groups.Clear();
 
                 foreach (var group in groups)
@@ -216,7 +212,6 @@ namespace TalkieClient.Views
                     _groups.Add(group);
                 }
 
-                // Обновление источника данных для списка групп
                 GroupList.ItemsSource = null;
                 GroupList.ItemsSource = _groups;
             }
@@ -229,71 +224,67 @@ namespace TalkieClient.Views
     {
         using (var context = new AppDbContext())
         {
-            // Если нужно обновить пользователей
+            // If you need to update users
             if (updatedUserId.HasValue)
             {
-                // Загрузка обновленного пользователя из базы данных
+                // Loading an updated user from the database
                 var updatedUser = context.Users
                     .Include(u => u.UserChats)
                     .FirstOrDefault(u => u.UserId == updatedUserId.Value);
 
                 if (updatedUser != null)
                 {
-                    // Проверяем, есть ли пользователь в списке
+                    // Check if the user is in the list
                     var userInList = _users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
 
                     if (userInList != null)
                     {
-                        // Обновляем данные пользователя
                         userInList.Username = updatedUser.Username;
                         userInList.Avatar = updatedUser.Avatar;
                         userInList.Status = updatedUser.Status;
 
-                        // Обновляем элемент в коллекции
+                        // Updating an item in a collection
                         var index = _users.IndexOf(userInList);
                         _users[index] = userInList;
                     }
                     else
                     {
-                        // Если пользователь не найден, добавляем его в список
                         _users.Add(updatedUser);
                     }
                 }
             }
 
-            // Если нужно обновить группы
+            // If you need to update the groups
             if (updatedGroupId.HasValue)
             {
-                // Загрузка обновленной группы из базы данных
+                // Loading an updated group from the database
                 var updatedGroup = context.Chats
                     .Include(g => g.UserChats)
                     .FirstOrDefault(g => g.ChatId == updatedGroupId.Value);
 
                 if (updatedGroup != null)
                 {
-                    // Проверяем, есть ли группа в списке
                     var groupInList = _groups.FirstOrDefault(g => g.ChatId == updatedGroup.ChatId);
 
                     if (groupInList != null)
                     {
-                        // Обновляем данные группы
+                        // Updating group data
                         groupInList.ChatName = updatedGroup.ChatName;
                         groupInList.Avatar = updatedGroup.Avatar;
                         groupInList.UserChats = updatedGroup.UserChats;
 
-                        // Обновляем элемент в коллекции
+                        // Updating an item in a collection
                         var index = _groups.IndexOf(groupInList);
                         _groups[index] = groupInList;
                     }
                     else
                     {
-                        // Если группа не найдена, добавляем ее в список
                         _groups.Add(updatedGroup);
                     }
                 }
             }
 
-            // Привязка данных к спискам в UI
+            // Binding data to lists in the UI
             UserList.ItemsSource = _users;
             UserList.Items.Refresh();
 
@@ -303,7 +294,7 @@ namespace TalkieClient.Views
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Ошибка при обновлении пользователей и групп: {ex.Message}");
+        Console.WriteLine($"Error when updating users and groups: {ex.Message}");
     }
 }
 
@@ -388,23 +379,21 @@ namespace TalkieClient.Views
             if (chat == null)
                 throw new ArgumentNullException(nameof(chat), "Chat cannot be null.");
 
-            // Загружаем сообщения для текущего чата
+            // Load messages for the current chat
             var messages = context.Messages
                 .Include(m => m.Sender)
                 .Include(m => m.Files)
                 .Where(m => m.ChatId == chat.ChatId)
                 .ToList();
 
-            // Очищаем текущие сообщения
             _messages.Clear();
 
-            // Добавляем загруженные сообщения
+            // Add uploaded messages
             foreach (var message in messages)
             {
                 _messages.Add(message);
             }
 
-            // Обновляем UI
             MessageList.Items.Refresh();
             MessageList.ItemsSource = _messages;
         }
@@ -417,58 +406,58 @@ namespace TalkieClient.Views
             if (string.IsNullOrWhiteSpace(messageContent))
                 throw new ArgumentNullException(nameof(messageContent), "Message content cannot be null or empty.");
 
-            try
+
+
+            using (var context = new AppDbContext())
             {
-                using (var context = new AppDbContext())
+
+                if (chat.ChatId == 0)
+                    throw new ArgumentException("ChatId cannot be 0 or default value.", nameof(chat.ChatId));
+
+                if (chat.UserChats == null || !chat.UserChats.Any())
                 {
-                    if (chat.ChatId == 0)
-                        throw new ArgumentException("ChatId cannot be 0 or default value.", nameof(chat.ChatId));
+                    throw new InvalidOperationException("No users found for this chat.");
+                }
 
-                    if (chat.UserChats == null || !chat.UserChats.Any())
-                    {
-                        throw new InvalidOperationException("No users found for this chat.");
-                    }
+                var message = new Message
+                {
+                    Content = messageContent,
+                    Timestamp = DateTime.Now,
+                    SenderId = _loggedInUser.UserId,
+                    ChatId = chat.ChatId
+                };
 
-                    // Создание нового сообщения
-                    var message = new Message
-                    {
-                        Content = messageContent,
-                        Timestamp = DateTime.Now,
-                        SenderId = _loggedInUser.UserId,
-                        ChatId = chat.ChatId,
-                        Type = MessageType.Text
-                    };
+                context.Messages.Add(message);
+                await context.SaveChangesAsync();
 
-                    // Сохранение сообщения в базе данных
-                    context.Messages.Add(message);
-                    await context.SaveChangesAsync();
-                    _messages.Add(message);
+                _messages.Add(message);
 
-                    // Отправка сообщения через SignalR
-                    if (chat.IsGroup)
+                if (chat.IsGroup)
+                {
+                    if (string.IsNullOrWhiteSpace(chat.ChatName))
+                        throw new ArgumentException("ChatName cannot be null or empty for group chat.", nameof(chat.ChatName));
+
+                    try
                     {
                         await _signalRClient.SendGroupMessageAsync(chat.ChatName, _loggedInUser.Username, message.Content);
+                        Console.WriteLine($"Message sent to group {chat.ChatName} by {_loggedInUser.Username}");
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        var recipient = chat.UserChats.FirstOrDefault(uc => uc.UserId != _loggedInUser.UserId)?.User.Username;
-                        if (!string.IsNullOrWhiteSpace(recipient))
-                        {
-                            await _signalRClient.SendPrivateMessageAsync(_loggedInUser.Username, recipient, message.Content);
-                        }
+                        Console.WriteLine($"Error sending message to group {chat.ChatName}: {ex.Message}");
                     }
-
-                    // Обновляем UI
-                    MessageList.ItemsSource = null;  // Сбрасываем источник данных
-                    MessageList.ItemsSource = _messages;  // Назначаем обновленный список сообщений
-
-                    // Очищаем поле ввода сообщения
-                    MessageTextBox.Clear();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error sending message: {ex.Message}");
+                else
+                {
+                    var recipient = chat.UserChats.FirstOrDefault(uc => uc.UserId != _loggedInUser.UserId)?.User.Username;
+
+                    if (string.IsNullOrWhiteSpace(recipient))
+                        throw new ArgumentException("Recipient cannot be null or empty in private chat.", nameof(recipient));
+
+                    await _signalRClient.SendPrivateMessageAsync(_loggedInUser.Username, recipient, message.Content);
+                }
+
+                MessageTextBox.Clear();
             }
         }
 
@@ -485,13 +474,13 @@ namespace TalkieClient.Views
             if (_loggedInUser == null)
                 throw new InvalidOperationException("Logged-in user is not set.");
 
-            // Проверяем, что у файла есть путь
+            // Check that the file has a path
             if (string.IsNullOrWhiteSpace(file.FilePath))
                 throw new ArgumentException("FilePath cannot be null or empty.", nameof(file.FilePath));
 
             using (var context = new AppDbContext())
             {
-                // Загружаем чат вместе с UserChats и связанными пользователями
+                // Load the chat room together with UserChats and associated users
                 chat = context.Chats
                               .Include(c => c.UserChats)
                               .ThenInclude(uc => uc.User)
@@ -699,13 +688,12 @@ namespace TalkieClient.Views
                 }
             }
         }
-        // Открываем окно выбора эмодзи
+
         private void EmojiPickerButton_Click(object sender, RoutedEventArgs e)
         {
             EmojiWindow emojiWindow = new EmojiWindow();
             if (emojiWindow.ShowDialog() == true)
             {
-                // Добавляем выбранный эмодзи в поле для ввода сообщения
                 MessageTextBox.Text += emojiWindow.SelectedEmoji;
             }
         }
@@ -763,7 +751,6 @@ namespace TalkieClient.Views
         {
             if (MessageList.SelectedItem is Message selectedMessage)
             {
-                // Открытие окна для редактирования сообщения
                 EditMessageWindow editWindow = new EditMessageWindow(selectedMessage);
                 if (editWindow.ShowDialog() == true)
                 {
@@ -807,7 +794,7 @@ namespace TalkieClient.Views
             {
                 using (var context = new AppDbContext())
                 {
-                    // Загрузка сообщений для указанного чата из базы данных, включая информацию об отправителе
+                    // Downloading messages for the specified chat from the database, including sender information
                     var updatedMessages = context.Messages
                         .Where(m => m.ChatId == chatId)
                         .OrderBy(m => m.Timestamp)
@@ -815,12 +802,10 @@ namespace TalkieClient.Views
                         .Include(m => m.Files)
                         .ToList();
 
-                    // Преобразование списка сообщений в ObservableCollection
                     _messages = new ObservableCollection<Message>(updatedMessages);
 
-                    // Привязка данных к ListBox
                     MessageList.ItemsSource = _messages;
-                    MessageList.Items.Refresh(); // Обновление отображения элементов
+                    MessageList.Items.Refresh(); 
                 }
             }
             catch (Exception ex)

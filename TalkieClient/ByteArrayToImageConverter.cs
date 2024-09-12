@@ -31,7 +31,7 @@ namespace TalkieClient
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при загрузке изображения: {ex.Message}");
+                    MessageBox.Show($"Error when loading an image: {ex.Message}");
                 }
             }
             return null;

@@ -11,7 +11,6 @@ namespace TalkieClient.Views
             MessageTextBlock.Text = message;
             Loaded += NotificationWindow_Loaded;
         }
-
         private void NotificationWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var workingArea = SystemParameters.WorkArea;

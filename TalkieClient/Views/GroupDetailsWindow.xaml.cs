@@ -1,12 +1,8 @@
 ﻿using Microsoft.Win32;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using TalkieClient.Data;
-using TalkieClient.Models;
-using System.Threading.Tasks;
 
 namespace TalkieClient.Views
 {
@@ -22,13 +18,8 @@ namespace TalkieClient.Views
             _currentUser = currentUser;
             DataContext = this;
 
-            // Проверка прав модератора
             SetModeratorPermissions();
-
-            // Загрузка данных группы
             LoadGroupData();
-
-            // Загрузка участников группы
             LoadGroupMembersAsync();
         }
 
@@ -46,7 +37,7 @@ namespace TalkieClient.Views
         {
             GroupNameTextBox.Text = _currentGroup.ChatName;
 
-            // Загрузка аватара
+            // Uploading an avatar
             if (_currentGroup.Avatar != null && _currentGroup.Avatar.Length > 0)
             {
                 GroupAvatar.Source = ConvertByteArrayToImage(_currentGroup.Avatar);
@@ -101,8 +92,6 @@ namespace TalkieClient.Views
                         context.SaveChanges();
                     }
                 }
-
-                // Обновление списка участников после удаления
                 LoadGroupMembersAsync();
             }
             else
@@ -113,13 +102,8 @@ namespace TalkieClient.Views
 
         private void UpdateGroupButton_Click(object sender, RoutedEventArgs e)
         {
-            // Сохранение изменений в базе данных
             SaveChangesToDatabase();
-
-            // Обновление данных в главном окне
             UpdateMainWindow();
-
-            // Закрытие окна после обновления
             this.Close();
         }
 
